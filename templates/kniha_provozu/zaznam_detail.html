@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ zaznam.name }} - Kniha provozu{% endblock %}
+
+{% block body %}
+<div id="header">{% block header %}{{ zaznam.name }}{% endblock %}</div>
+{% block menu %}{{ block.super }}{% endblock %}
+
+<div id="content">
+{% block content %}
+
+<p><a href="{% url 'kniha_provozu:zaznam_list' %}">&larr; Zpět na seznam</a></p>
+
+<table cellspacing="0">
+    <tr><th>Název</th><td>{{ zaznam.name }}</td></tr>
+    <tr><th>Verze</th><td>{{ zaznam.version }}</td></tr>
+    <tr><th>Autor</th><td>{{ zaznam.author }}</td></tr>
+    <tr><th>Místo (adresář)</th><td>{{ zaznam.location }}</td></tr>
+    <tr><th>Příkaz</th><td>{{ zaznam.command }}</td></tr>
+    <tr><th>Typ spuštění</th><td>{{ zaznam.type_of_launch }}</td></tr>
+    <tr><th>Frekvence spuštění</th><td>{{ zaznam.trigger_frequency }}</td></tr>
+    <tr><th>Popis</th><td>{{ zaznam.description|linebreaks }}</td></tr>
+    <tr><th>Odkaz na detaily</th><td>{% if zaznam.link_to_details %}<a href="{{ zaznam.link_to_details }}">{{ zaznam.link_to_details }}</a>{% endif %}</td></tr>
+    <tr><th>Stav</th><td>{{ zaznam.status }}</td></tr>
+    <tr><th>Vytvořil</th><td>{{ zaznam.created_by }}</td></tr>
+    <tr><th>Datum publikace</th><td>{{ zaznam.added }}</td></tr>
+</table>
+
+<p><a href="{% url 'kniha_provozu:zaznam_update' zaznam.id %}">Upravit záznam</a></p>
+
+<h3>Historie změn</h3>
+{% if historie %}
+<table cellspacing="0">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Pole</th>
+            <th>Původní hodnota</th>
+            <th>Nová hodnota</th>
+            <th>Upravil</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for h in historie %}
+        <tr>
+            <td>{{ h.date_run }}</td>
+            <td>{{ h.field_name }}</td>
+            <td>{{ h.old_value }}</td>
+            <td>{{ h.new_value }}</td>
+            <td>{{ h.changed_by }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Žádné změny zatím nebyly zaznamenány.</p>
+{% endif %}
+
+{% endblock %}
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Kniha provozu{% endblock %}
+
+{% block body %}
+<div id="header">{% block header %}Kniha provozu{% endblock %}</div>
+{% block menu %}{{ block.super }}{% endblock %}
+
+<div id="content">
+{% block content %}
+
+<form method="get" style="margin-bottom: 1em;">
+    <input type="text" name="search" value="{{ search }}" placeholder="Hledat podle názvu...">
+    <button type="submit">Hledat</button>
+</form>
+
+<p><a href="{% url 'kniha_provozu:zaznam_create' %}">+ Nový záznam</a></p>
+
+{% if zaznamy %}
+<table cellspacing="0">
+    <thead>
+        <tr>
+            <th>Název</th>
+            <th>Verze</th>
+            <th>Autor</th>
+            <th>Stav</th>
+            <th>Typ spuštění</th>
+            <th>Datum publikace</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for zaznam in zaznamy %}
+        <tr>
+            <td><a href="{% url 'kniha_provozu:zaznam_detail' zaznam.id %}">{{ zaznam.name }}</a></td>
+            <td>{{ zaznam.version }}</td>
+            <td>{{ zaznam.author }}</td>
+            <td>{{ zaznam.status }}</td>
+            <td>{{ zaznam.type_of_launch }}</td>
+            <td>{{ zaznam.added }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Žádné záznamy nebyly nalezeny.</p>
+{% endif %}
+
+{% endblock %}
+</div>
+{% endblock %}

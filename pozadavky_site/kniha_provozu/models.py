@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from pip._vendor.rich import status
+
 
 class ZaznamKnihaProvozu(models.Model):
     name = models.CharField('Název', max_length=100)

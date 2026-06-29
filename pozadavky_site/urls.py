@@ -54,6 +54,7 @@ urlpatterns = [
     
     # path('chaining/', include('smart_selects.urls')),
     path('ajax/users_by_group/<int:group_id>/', task_views.users_by_group, name='users_by_group'),
+    path('kniha-provozu/', include('pozadavky_site.kniha_provozu.urls')),
 ]
     
 # urlpatterns = [
