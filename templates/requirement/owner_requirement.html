@@ -1,0 +1,57 @@
+{% extends "./base.html" %}
+
+{% block body %}
+<div id="header">{% block header %}Úkoly{% endblock %}</div> 
+{% block menu %}{{block.super}}{% endblock %}
+
+<div id="content"><!-- content -->
+{% block content %}
+ 
+{% if requirement_list %}
+<p>Zpacovatel : <b>{{ owner }}</b></p>  
+ <table cellspacing="0">
+    <thead>
+      <tr>
+        {% for header in table_headers %}
+            <th class="{% ifequal field header.1 %}sorted{% ifequal ot "desc" %} descending{%else%} ascending{% endifequal %}{% endifequal %}">
+            {% ifequal field header.1 %}
+                <a href="{% ifequal ot "desc" %}?ot=asc&amp;{% else %}?ot=desc&amp;{% endifequal %}field={{ header.1 }}&amp;search={{search}}"> {{ header.0 }}</a></th>
+            {% else %}         
+                <a href="?ot=asc&amp;field={{ header.1 }}&amp;search={{search}}"> {{ header.0 }}</a></th>
+            {% endifequal %}
+        {% endfor %}  
+    </tr>
+  </thead>
+<tbody> 
+    
+  {% for requirement in requirement_list %}
+        
+   <tr>
+       <td><a href="/nabidka/requirement/{{  requirement.id }}/"> {{  requirement.id }}</a></td>
+       <td>{{ requirement.requirement }}</td>
+       <td>{{requirement.added }}</td>
+       <td>{{requirement.author }}</td>	
+       <td>{{ requirement.deadline }}</td>
+       
+       <td><b> {{ requirement.status }} </b></td>
+       
+       {% ifequal requirement.done None %}
+          <td>{{ requirement.done }} <td>
+       {% else %}
+          <td> {{ requirement.done }} <td>
+       {% endifequal %}   
+       
+       
+    </tr>
+   {% endfor %}
+</tbody>   
+</table>  
+{% else %}
+	<p>Hi {{ user.first_name }},  no owner requirements are available.</p>
+    
+{% endif %}
+
+      {% endblock %} <!-- content -->
+</div>
+{% endblock %} <!-- body -->
+

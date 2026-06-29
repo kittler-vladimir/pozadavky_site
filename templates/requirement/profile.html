@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{% block title %}Uživatelský profil {% endblock %}</h1>
+
+{% if saved %}
+  <p>Profil byl upraven.</p>
+{% endif %}
+
+<form action="." method="POST">
+<table>
+{% include "form.html" %}
+<tr>
+<td></td>
+<td><input type="submit" value="Upravit"></td>
+</tr>
+</table>
+</form>
+{% endblock %}

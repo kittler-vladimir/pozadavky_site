@@ -1,0 +1,54 @@
+{% extends "./base.html" %}
+
+{% block menu %}{{block.super}}{% endblock %}
+
+{% block content %}
+<h1>{% block title %}{{ task.requirement }} ( {{task.edition}} ze dne {{ task.added }}){% endblock %}</h1>
+
+<table>
+<tr>
+<th>Zadal: </th>
+<td>{{ task.author.get_full_name }}</td>
+</tr>
+<tr>
+<th>Oddělení: </th>
+<td><a href="/task/group/{{ task.group_owner_id }}">{{ task.group_owner }} </a></td>
+</tr>
+<tr>
+
+<th>Zpracovatel: </th>
+<td><a href="/task/owner/{{ task.owner_id }}/">{{ task.owner.last_name }} </a></td>
+</tr>
+
+<tr>
+<th>Zadáno: </th>
+<td>{{ task.added }}</td>
+</tr>
+
+<th>Termín: </th>
+<td>{{ task.deadline }}</td>
+</tr>
+
+
+{% if task.status %}
+<tr>
+<th>Stav: </th>
+<td id="description">{{ task.status }}</td>
+</tr>
+{% endif %}
+
+ {% if task.description %}
+ <tr>
+    <th>Popis: </th>
+    <td id="description">{{ task.safe_description }}</td>
+ </tr>
+ {% endif %} 
+</table>
+
+<p><a href="/tasks/all/">Zpět	</a></p>
+
+<!--
+<p><a href="/nabidka/{{ requirement.requirement|first|lower }}/">Zpět do nabídky</a></p>
+-->
+{% endblock %}
+

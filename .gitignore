@@ -1,0 +1,12 @@
+*.py[co]
+__pycache__/
+.project
+.pydevproject
+static_all/
+/ukoly.dump
+/env
+/data.dump
+/django-smart-selects-offline
+db.sqlite3
+*.log
+.DS_Store

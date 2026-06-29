@@ -1,0 +1,14 @@
+{% extends "./base.html" %}
+<title>{% block title %} {{block.super}} {% endblock %}</title>
+{% block menu %} {{block.super}} {% endblock %}
+{% block content %}
+<br>
+<p> Web aplikace <b>evidence úkolů odboru</b></p>
+<p>
+
+Tuto aplikaci lze provozovat jak na lokálním počítači s podporou např. <b>SQLite</b> db nebo na webowém <br>
+serveru s <b>uwsgi</b>, <b>uwsgi-plugin-python3 </b> a <b>nginx</b> na databázích <b>PostgreSql</b>, MySql, Oracle, SQLite . 
+</p>
+
+<p><a href="mailto:vladimir.kittler@mvcr.cz">Vladimír Kittler</a>, tel. 849602</p>
+{% endblock %}

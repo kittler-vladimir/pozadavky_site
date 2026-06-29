@@ -1,0 +1,72 @@
+{% extends "./base.html" %}
+
+{% block body %}
+<div id="header">{% block header %}Úkoly{% endblock %}</div> 
+{% block menu %}{{block.super}}{% endblock %}
+
+<div id="content"><!-- content -->
+{% block content %}
+
+{% if authors %}
+
+<table cellspacing="0">
+    <thead>
+      <tr>
+        {% for header in table_headers %}
+            <th class="{% ifequal field header.1 %}sorted{% ifequal ot "desc" %} descending{%else%} ascending{% endifequal %}{% endifequal %}">
+            {% ifequal field header.1 %}
+                <a href="{% ifequal ot "desc" %}?ot=asc&amp;{% else %}?ot=desc&amp;{% endifequal %}field={{ header.1 }}&amp;search={{search}}"> {{ header.0 }}</a></th>
+            {% else %}         
+                <a href="?ot=asc&amp;field={{ header.1 }}&amp;search={{search}}"> {{ header.0 }}</a></th>
+            {% endifequal %}
+        {% endfor %}  
+    </tr>
+  </thead>
+  
+  <tbody> 
+  
+  {% for author in authors %}
+   
+    <tr>
+       <td><a href="/tasks/author/{{ author.id }}/"> {{ author.last_name }} {{ author.first_name }} </a></td>
+    </tr>
+  </tbody>  
+  {% endfor %}
+  </table>
+
+
+   {% if authors.has_other_pages %}
+        <br>
+        <p class="paginator" align="left" width="400px" >
+            <div class="pagination">
+            {% if authors.has_previous %}
+                <a href="?page={{ authors.previous_page_number }}&amp;search={{search}}">&laquo;</a>
+            {% else %}    
+                <a><span>&laquo;</span></a>
+            {% endif %}
+            
+        {% for i in authors.paginator.page_range %}
+            {% if authors.number == i %}
+                <a href="" class="active">{{ i }} </a>
+            {% else %}
+                <a href="?page={{ i }}&amp;search={{search}}">{{ i }}</a>    
+            {% endif %}   
+        {% endfor %}  
+        {% if authors.has_next %}
+            <a href="?page={{ authors.next_page_number }}&amp;search={{search}}">&raquo;</a>
+        {% else %}
+            <a>&raquo;</a>
+        {% endif %} 
+            </div>  
+        </p>  
+    {% endif %}
+
+
+{% else %}
+	<p>Hi Kita, no authors are available.</p>
+    
+{% endif %}
+
+      {% endblock %} <!-- content -->
+</div>
+{% endblock %} <!-- body -->

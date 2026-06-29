@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block stylesheet %}{% load staticfiles %}{%static 'css/login.css'%}{% endblock %} 
+{% block content %}
+<h1>{% block title %}Přihlášení{% endblock %}</h1>
+
+{% if form.errors %}
+  <p>Špatně zadané uživatelské jméno nebo heslo. Zkuste se prosím přihlásit znovu.</p>
+{% endif %}
+
+<form action="/login_view_authorization/" method="POST">{% csrf_token %}
+<!--<form action="/login_aut/" method="POST">{% csrf_token %} -->
+<!-- <form action="." method="POST">{% csrf_token %} -->
+<table>
+{% include "requirement/form.html" %} 
+<tr>
+<td></td>
+<td>
+<input type="submit" value="Přihlásit se">
+<input type="hidden" name="next" value="{{ next }}">
+</td>
+</tr>
+</table>
+</form>
+
+{% endblock %}

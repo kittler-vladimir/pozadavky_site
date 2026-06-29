@@ -1,0 +1,94 @@
+* {
+    font-family: "Palatino Linotype", "New York CE", utopia, serif;
+}
+body {
+    width: 760px;
+    min-height: 500px;
+    margin: 0 auto;
+    border: 2px solid #008B8B;
+}
+a {
+    color: #008B8B;
+}
+h1 {
+    margin-top: 0;
+}
+ul.store, ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+ul.store li, ul.errorlist li {
+    list-style: none;
+}
+ul.errorlist li {
+    font-size: 85%;
+    text-align: right;
+    color: #FF0033;
+}
+tr {
+    text-align: left;
+}
+th {
+    vertical-align: top;
+    font-weight: normal;
+}
+.required {
+    font-weight: bold;
+}
+.help_text {
+    font-size: 85%;
+}
+input[type=text], input[type=password] {
+    width: 300px;
+}
+input#id_username, input#id_password, input#id_password1, input#id_password2 {
+    width: 200px;
+}
+textarea {
+    width: 300px;
+    height: 150px;
+}
+.letters {
+    border: 1px #AFEEEE solid;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+#header {
+    font-size: 250%;
+    padding: 20px 0 15px 10px;
+    background-color: #AFEEEE;
+    border-bottom: 5px solid #008B8B;
+}
+#menu {
+    padding: 15px;
+    width: 170px;
+    float: left;
+}
+#menu ul {
+    padding: 0;
+    margin: 0; 
+}
+#menu li {
+    list-style: none;
+    font-size: 120%;
+}
+#menu a:hover {
+    background-color: #008B8B;
+    color: #FFFFFF;
+}
+#menu ul#user {
+    margin-top: 20px;
+}
+#menu ul#user li {
+    padding-top: 5px;
+    font-size: 100%;
+}
+#content {
+ 	margin-left: 200px;
+   padding: 15px;
+    }
+@media print {
+    #header, #menu {
+    display: none;
+    }
+}

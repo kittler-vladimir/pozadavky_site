@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>{% block title %} Tasks - odbor centralnich informacnich systemu {% endblock %}</title>
+ {% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+
+<!-- link rel="stylesheet" href="{{STATIC_URL}}css/base.css" type="text/css"> -->
+</head>
+
+
+<body>
+<div id="main">
+{% block body %} <!-- body -->
+
+<div id="header">{% block header %} Úkoly {% endblock %}</div>
+
+{% block menu %} <!-- menu -->
+<div id="menu1">
+  <ul>
+    <li><a href="/home/" title="Úvodní strana"><span>Home</span></a></li>
+    {% if user.is_authenticated %}
+        <li><a href="/tasks/all/" title="Úkoly všechny"><span>Úkoly</span></a></li>
+        <li><a href="/tasks/done/" title="Úkoly splněné"><span>Splněné</span></a></li>
+        <li><a href="/tasks/done_after/" title="Úkoly splněné po termínu"><span>Splněné po termínu</span></a></li>
+        <li><a href="/tasks/not_done/" title="Úkoly nesplněné"><span>Nesplněné</span></a></li>
+        <li><a href="/tasks/not_done_after/" title="Úkoly nesplněné po termínu"><span>Nesplněné po termínu</span></a></li>
+        <li><a><span>Přihlášen: <b>{{ user.get_full_name }}</b></span></a></li>
+        {% if user.is_staff %}
+            {% if user.is_superuser %} 
+                <li><a href="/groups/" title="Oddělení"><span>Oddělení</span></a></li>
+                <li><a href="/authors/" title="Autoři - zadal"><span>Zadal</span></a></li>  
+            {% endif %}   
+            <li><a href="/admin/" title="Administrační rozhraní"><span>Administrace</span></a></li>
+        {% endif %}
+    <li><a href="/accounts/logout/" title="Odhlášení uživatele"><span>Logout</span></a></li>
+     {% else %}
+       <li><a href="/accounts/login/" title="Přihlášení uživatele"><span>Login</span></a></li> 
+    {% endif %}
+    </ul>  
+</div>
+{% endblock %}  <!-- menu -->
+
+
+    <div id="content"><!-- content -->
+      {% block content %}
+      {% endblock %} <!-- content -->
+    </div>
+
+{% endblock %} <!-- body -->
+
+    
+    
+</div> 
+</body>
+</html>

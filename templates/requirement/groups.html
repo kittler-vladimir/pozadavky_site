@@ -1,0 +1,46 @@
+{% extends "./base.html" %}
+
+{% block body %}
+<div id="header">{% block header %}Úkoly{% endblock %}</div> 
+{% block menu %}{{block.super}}{% endblock %}
+
+<div id="content"><!-- content -->
+{% block content %}
+
+{% if groups %}
+
+<table cellspacing="0">
+    <thead>
+      <tr>
+        {% for header in table_headers %}
+            <th class="{% ifequal field header.1 %}sorted{% ifequal ot "desc" %} descending{%else%} ascending{% endifequal %}{% endifequal %}">
+            {% ifequal field header.1 %}
+                <a href="{% ifequal ot "desc" %}?ot=asc&amp;{% else %}?ot=desc&amp;{% endifequal %}field={{ header.1 }}&amp;search={{search}}"> {{ header.0 }}</a></th>
+            {% else %}         
+                <a href="?ot=asc&amp;field={{ header.1 }}&amp;search={{search}}"> {{ header.0 }}</a></th>
+            {% endifequal %}
+        {% endfor %}  
+    </tr>
+  </thead>
+  
+  <tbody> 
+  
+  {% for group in groups %}
+        
+   <tr>
+       <td><a href="/task/group_owner/{{ group.id }}/"> {{  group.id }}</a></td>
+       <td>{{ group.name }}</td>
+        
+    </tr>
+  </tbody>  
+  {% endfor %}
+  </table>
+
+{% else %}
+	<p>Hi Kita, no groups are available.</p>
+    
+{% endif %}
+
+      {% endblock %} <!-- content -->
+</div>
+{% endblock %} <!-- body -->

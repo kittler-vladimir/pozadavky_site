@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% block title %}{% trans "Chyba" %} 500{% endblock %}</h1>
+
+<p>{% trans "Omlouváme se, ale v aplikaci došlo k neoèekávané chybì. Zároveò byl odeslán upozoròující e-mail administrátorovi, takže problém brzy napravíme." %}</p>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "./base.html" %}
+
+{% block menu %}{{block.super}}{% endblock %}
+
+{% block content %}
+<h1>{% block title %}{{ requirement.requirement }} ( {{requirement.edition}} ze dne {{ requirement.added }}){% endblock %}</h1>
+
+<table>
+<tr>
+<th>Zadal: </th>
+<td>{{ requirement.author.last_name }}</td>
+</tr>
+<tr>
+<th>Zpracovatel: </th>
+<td><a href="/nabidka/owner/{{ requirement.owner_id }}/">{{ requirement.owner }} </a></td>
+</tr>
+<tr>
+<th>Zadáno: </th>
+<td>{{ requirement.added }}</td>
+</tr>
+
+{% if requirement.status %}
+<tr>
+<th>Stav: </th>
+<td id="description">{{ requirement.status }}</td>
+</tr>
+{% endif %}
+
+ {% if requirement.description %}
+ <tr>
+    <th>Popis: </th>
+    <td id="description">{{ requirement.safe_description }}</td>
+ </tr>   
+ {% endif %}
+</table>
+
+<p><a href="/nabidka/requirements/">Zpět	</a></p>
+
+<!--
+<p><a href="/nabidka/{{ requirement.requirement|first|lower }}/">Zpět do nabídky</a></p>
+-->
+{% endblock %}
+
