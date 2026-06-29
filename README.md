@@ -9,7 +9,36 @@ Django webová aplikace pro evidenci a sledování požadavků (tasků), jejich 
 - Správa skupin a autorů
 - Přihlašování / odhlašování uživatelů (Django auth)
 - Administrace přes Django Admin
-- Modul **kniha_provozu** (provozní kniha)
+- Modul **Kniha provozu** (provozní kniha) – viz sekce níže
+
+### Kniha provozu
+
+Modul pro evidenci provozních zápisů/zásahů na serverech. Dostupný jak přes vlastní webové stránky (`/kniha-provozu/`), tak přes Django Admin.
+
+**Pole záznamu:**
+
+| Pole | Popis |
+|---|---|
+| Den | Datum zápisu |
+| Čas | Čas zápisu |
+| Kde (server) | Server/prostředí, kde byl zásah provedený |
+| Dir | Adresář, kde se zásah odehrál |
+| Popis | Bližší specifikace / doména / SQL |
+| Text | Hlavní text/obsah zápisu |
+| Kdo | Kdo zápis provedl |
+| Poznámka | Volná poznámka |
+
+**Funkce:**
+- Seznam záznamů s vyhledáváním v textu
+- Detail záznamu
+- Vytvoření a úprava záznamu (přes vlastní formulář i přes Django Admin)
+- **Automatická historie změn** – při každé úpravě záznamu se zaznamená, které pole se změnilo, jaká byla původní a nová hodnota, a kdo změnu provedl
+
+**URL:**
+- `/kniha-provozu/` – seznam záznamů
+- `/kniha-provozu/novy/` – vytvoření nového záznamu
+- `/kniha-provozu/<id>/` – detail záznamu (včetně historie změn)
+- `/kniha-provozu/<id>/upravit/` – úprava záznamu
 
 ## Technologie
 
