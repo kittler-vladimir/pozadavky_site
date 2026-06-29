@@ -5,11 +5,7 @@ from django.contrib import messages
 from .models import ZaznamKnihaProvozu, HistorieKnihaProvozu
 from .forms import ZaznamKnihaProvozuForm
 
-TRACKED_FIELDS = [
-    'name', 'version', 'author', 'location', 'command',
-    'type_of_launch', 'trigger_frequency', 'description',
-    'link_to_details', 'status',
-]
+TRACKED_FIELDS = ['den', 'cas', 'kde_server', 'dir', 'popis', 'text', 'kdo', 'poznamka']
 
 
 @login_required
@@ -17,7 +13,7 @@ def zaznam_list(request):
     zaznamy = ZaznamKnihaProvozu.objects.all()
     search = request.GET.get('search', '')
     if search:
-        zaznamy = zaznamy.filter(name__icontains=search)
+        zaznamy = zaznamy.filter(text__icontains=search)
     return render(request, 'kniha_provozu/zaznam_list.html', {
         'zaznamy': zaznamy,
         'search': search,

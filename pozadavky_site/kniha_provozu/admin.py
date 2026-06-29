@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import ZaznamKnihaProvozu, HistorieKnihaProvozu
 
+TRACKED_FIELDS = ['den', 'cas', 'kde_server', 'dir', 'popis', 'text', 'kdo', 'poznamka']
+
 
 class HistorieKnihaProvozuInline(admin.TabularInline):
     model = HistorieKnihaProvozu
@@ -13,20 +15,15 @@ class HistorieKnihaProvozuInline(admin.TabularInline):
 
 @admin.register(ZaznamKnihaProvozu)
 class ZaznamKnihaProvozuAdmin(admin.ModelAdmin):
-    list_display = ('name', 'version', 'author', 'status', 'type_of_launch', 'added')
-    list_filter = ('status', 'type_of_launch', 'trigger_frequency')
-    search_fields = ('name', 'version', 'author', 'description')
+    list_display = ('den', 'cas', 'kde_server', 'dir', 'kdo', 'added')
+    list_filter = ('kde_server', 'kdo')
+    search_fields = ('kde_server', 'dir', 'popis', 'text', 'kdo', 'poznamka')
     inlines = [HistorieKnihaProvozuInline]
 
     def save_model(self, request, obj, form, change):
         if change:
             old_obj = ZaznamKnihaProvozu.objects.get(pk=obj.pk)
-            tracked_fields = [
-                'name', 'version', 'author', 'location', 'command',
-                'type_of_launch', 'trigger_frequency', 'description',
-                'link_to_details', 'status',
-            ]
-            for field in tracked_fields:
+            for field in TRACKED_FIELDS:
                 old_value = getattr(old_obj, field)
                 new_value = getattr(obj, field)
                 if old_value != new_value:
