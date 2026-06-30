@@ -10,7 +10,7 @@
 {% block content %}
 
 <form method="get" style="margin-bottom: 1em;">
-    <input type="text" name="search" value="{{ search }}" placeholder="Hledat podle názvu...">
+    <input type="text" name="search" value="{{ search }}" placeholder="Hledat v textu...">
     <button type="submit">Hledat</button>
 </form>
 
@@ -20,23 +20,27 @@
 <table cellspacing="0">
     <thead>
         <tr>
-            <th>Název</th>
-            <th>Verze</th>
-            <th>Autor</th>
-            <th>Stav</th>
-            <th>Typ spuštění</th>
-            <th>Datum publikace</th>
+            <th>Den</th>
+            <th>Čas</th>
+            <th>Kde (server)</th>
+            <th>Dir</th>
+            <th>Popis</th>
+            <th>Text</th>
+            <th>Kdo</th>
+            <th>Poznámka</th>
         </tr>
     </thead>
     <tbody>
     {% for zaznam in zaznamy %}
         <tr>
-            <td><a href="{% url 'kniha_provozu:zaznam_detail' zaznam.id %}">{{ zaznam.name }}</a></td>
-            <td>{{ zaznam.version }}</td>
-            <td>{{ zaznam.author }}</td>
-            <td>{{ zaznam.status }}</td>
-            <td>{{ zaznam.type_of_launch }}</td>
-            <td>{{ zaznam.added }}</td>
+            <td><a href="{% url 'kniha_provozu:zaznam_detail' zaznam.id %}">{{ zaznam.den }}</a></td>
+            <td>{{ zaznam.cas }}</td>
+            <td>{{ zaznam.kde_server }}</td>
+            <td>{{ zaznam.dir }}</td>
+            <td>{{ zaznam.popis }}</td>
+            <td>{{ zaznam.text }}</td>
+            <td>{{ zaznam.kdo }}</td>
+            <td>{{ zaznam.poznamka }}</td>
         </tr>
     {% endfor %}
     </tbody>

@@ -29,7 +29,7 @@ Modul pro evidenci provozních zápisů/zásahů na serverech. Dostupný jak př
 | Poznámka | Volná poznámka | Ne |
 
 **Funkce:**
-- Seznam záznamů s vyhledáváním v textu
+- Seznam záznamů zobrazující všechna pole (Den, Čas, Kde, Dir, Popis, Text, Kdo, Poznámka), s vyhledáváním v textu
 - Detail záznamu
 - Vytvoření a úprava záznamu (přes vlastní formulář i přes Django Admin)
 - **Automatická historie změn** – při každé úpravě záznamu se zaznamená, které pole se změnilo, jaká byla původní a nová hodnota, a kdo změnu provedl
