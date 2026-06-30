@@ -37,6 +37,7 @@ def zaznam_create(request):
         if form.is_valid():
             zaznam = form.save(commit=False)
             zaznam.created_by = request.user
+            zaznam.kdo = request.user.get_full_name() or request.user.username
             zaznam.save()
             messages.success(request, 'Záznam byl úspěšně vytvořen.')
             return redirect('kniha_provozu:zaznam_detail', zaznam_id=zaznam.id)
@@ -53,7 +54,9 @@ def zaznam_update(request, zaznam_id):
         old_values = {field: getattr(zaznam, field) for field in TRACKED_FIELDS}
         form = ZaznamKnihaProvozuForm(request.POST, instance=zaznam)
         if form.is_valid():
-            updated_zaznam = form.save()
+            updated_zaznam = form.save(commit=False)
+            updated_zaznam.kdo = request.user.get_full_name() or request.user.username
+            updated_zaznam.save()
 
             for field in TRACKED_FIELDS:
                 old_value = old_values[field]

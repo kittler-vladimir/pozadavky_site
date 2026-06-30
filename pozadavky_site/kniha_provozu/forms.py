@@ -6,11 +6,11 @@ class ZaznamKnihaProvozuForm(forms.ModelForm):
     class Meta:
         model = ZaznamKnihaProvozu
         fields = [
-            'den', 'cas', 'kde_server', 'dir', 'popis', 'text', 'kdo', 'poznamka',
+            'den', 'cas', 'kde_server', 'dir', 'popis', 'text', 'poznamka',
         ]
         widgets = {
             'den': forms.DateInput(attrs={'type': 'date'}),
             'cas': forms.TimeInput(attrs={'type': 'time'}),
-            'text': forms.Textarea(attrs={'rows': 5}),
+            'text': forms.TextInput(attrs={'maxlength': 150}),
             'poznamka': forms.Textarea(attrs={'rows': 3}),
         }

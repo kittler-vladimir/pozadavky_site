@@ -10,7 +10,7 @@ class ZaznamKnihaProvozu(models.Model):
     popis = models.CharField(
         'Popis (bližší specifikace/doména/sql)', max_length=255, blank=True, null=True
     )
-    text = models.TextField('Text')
+    text = models.CharField('Text', max_length=150, blank=True, null=True)
     kdo = models.CharField('Kdo', max_length=100)
     poznamka = models.TextField('Poznámka', blank=True, null=True)
 

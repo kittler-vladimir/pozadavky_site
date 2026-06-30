@@ -17,16 +17,16 @@ Modul pro evidenci provozních zápisů/zásahů na serverech. Dostupný jak př
 
 **Pole záznamu:**
 
-| Pole | Popis |
-|---|---|
-| Den | Datum zápisu |
-| Čas | Čas zápisu |
-| Kde (server) | Server/prostředí, kde byl zásah provedený |
-| Dir | Adresář, kde se zásah odehrál |
-| Popis | Bližší specifikace / doména / SQL |
-| Text | Hlavní text/obsah zápisu |
-| Kdo | Kdo zápis provedl |
-| Poznámka | Volná poznámka |
+| Pole | Popis | Povinné? |
+|---|---|---|
+| Den | Datum zápisu | Ano |
+| Čas | Čas zápisu | Ano |
+| Kde (server) | Server/prostředí, kde byl zásah provedený | Ano |
+| Dir | Adresář, kde se zásah odehrál | Ne |
+| Popis | Bližší specifikace / doména / SQL | Ne |
+| Text | Krátký text k zápisu (max. 150 znaků) | Ne |
+| Kdo | Kdo zápis provedl – vyplňuje se **automaticky podle přihlášeného uživatele** | Ano (auto) |
+| Poznámka | Volná poznámka | Ne |
 
 **Funkce:**
 - Seznam záznamů s vyhledáváním v textu
