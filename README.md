@@ -29,6 +29,7 @@ Modul pro evidenci provozních zápisů/zásahů na serverech. Dostupný jak př
 | Poznámka | Volná poznámka | Ne |
 
 **Funkce:**
+- Dostupné z hlavního menu (odkaz "Kniha provozu", viditelný pro přihlášené uživatele)
 - Seznam záznamů zobrazující všechna pole (Den, Čas, Kde, Dir, Popis, Text, Kdo, Poznámka), s vyhledáváním v textu
 - Detail záznamu
 - Vytvoření a úprava záznamu (přes vlastní formulář i přes Django Admin)
