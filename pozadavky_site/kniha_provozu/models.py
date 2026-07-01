@@ -2,28 +2,59 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class ZaznamKnihaProvozu(models.Model):
-    den = models.DateField('Den')
-    cas = models.TimeField('Čas')
-    kde_server = models.CharField('Kde (server)', max_length=100)
-    dir = models.CharField('Dir', max_length=200, blank=True, null=True)
-    popis = models.CharField(
-        'Popis (bližší specifikace/doména/sql)', max_length=255, blank=True, null=True
-    )
-    text = models.CharField('Text', max_length=150, blank=True, null=True)
-    kdo = models.CharField('Kdo', max_length=100)
-    poznamka = models.TextField('Poznámka', blank=True, null=True)
+TYPE_OF_LAUNCH_CHOICES = (
+    ('Manuálně', 'Manuálně'),
+    ('Naplánovaně (cron)', 'Naplánovaně (cron)'),
+    ('Při události', 'Při události'),
+)
 
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    added = models.DateTimeField('Datum vytvoření záznamu', auto_now_add=True)
+TRIGGER_FREQUENCY_CHOICES = (
+    ('Jednorázově', 'Jednorázově'),
+    ('Denně', 'Denně'),
+    ('Týdně', 'Týdně'),
+    ('Měsíčně', 'Měsíčně'),
+    ('Ročně', 'Ročně'),
+    ('Jinak', 'Jinak'),
+)
+
+STATUS_CHOICES = (
+    ('Aktivní', 'Aktivní'),
+    ('Neaktivní', 'Neaktivní'),
+    ('Ukončené', 'Ukončené'),
+    ('Zastavené', 'Zastavené'),
+    ('Zastaralé', 'Zastaralé'),
+)
+
+
+class ZaznamKnihaProvozu(models.Model):
+    name = models.CharField('Název', max_length=200)
+    version = models.CharField('Verze', max_length=50, blank=True, null=True)
+    author = models.CharField('Autor', max_length=150)
+    location = models.CharField('Místo (adresář)', max_length=200)
+    command = models.TextField('Příkaz')
+    launched_at = models.DateTimeField('Spuštěno', blank=True, null=True)
+    type_of_launch = models.CharField(
+        'Typ spuštění', max_length=50, choices=TYPE_OF_LAUNCH_CHOICES, default='Manuálně'
+    )
+    trigger_frequency = models.CharField(
+        'Frekvence spuštění', max_length=50, choices=TRIGGER_FREQUENCY_CHOICES, default='Jednorázově'
+    )
+    description = models.TextField('Popis', blank=True, null=True)
+    link_to_details = models.URLField('Odkaz na detaily', max_length=500, blank=True, null=True)
+    status = models.CharField(
+        'Stav', max_length=50, choices=STATUS_CHOICES, default='Aktivní'
+    )
+
+    created_by = models.CharField('Vytvořil', max_length=150, editable=False)
+    added = models.DateTimeField('Datum publikace', auto_now_add=True)
 
     def __str__(self):
-        return f"{self.den} {self.cas} — {self.kde_server}"
+        return self.name
 
     class Meta:
         verbose_name = 'záznam kniha provozu'
         verbose_name_plural = 'záznamy kniha provozu'
-        ordering = ['-den', '-cas']
+        ordering = ['-added']
 
     def get_absolute_url(self):
         from django.urls import reverse

@@ -1,7 +1,11 @@
 from django.contrib import admin
 from .models import ZaznamKnihaProvozu, HistorieKnihaProvozu
 
-TRACKED_FIELDS = ['den', 'cas', 'kde_server', 'dir', 'popis', 'text', 'kdo', 'poznamka']
+TRACKED_FIELDS = [
+    'name', 'version', 'author', 'location', 'command', 'launched_at',
+    'type_of_launch', 'trigger_frequency', 'description',
+    'link_to_details', 'status',
+]
 
 
 class HistorieKnihaProvozuInline(admin.TabularInline):
@@ -15,18 +19,24 @@ class HistorieKnihaProvozuInline(admin.TabularInline):
 
 @admin.register(ZaznamKnihaProvozu)
 class ZaznamKnihaProvozuAdmin(admin.ModelAdmin):
-    list_display = ('den', 'cas', 'kde_server', 'dir', 'kdo', 'added')
-    list_filter = ('kde_server', 'kdo')
-    search_fields = ('kde_server', 'dir', 'popis', 'text', 'kdo', 'poznamka')
+    list_display = (
+        'name', 'version', 'author', 'location', 'launched_at', 'type_of_launch',
+        'trigger_frequency', 'status', 'created_by', 'added',
+    )
+    list_filter = ('status', 'type_of_launch', 'trigger_frequency')
+    search_fields = ('name', 'author', 'location', 'command', 'description')
+    readonly_fields = ('created_by', 'added')
     inlines = [HistorieKnihaProvozuInline]
 
     def save_model(self, request, obj, form, change):
-        if change:
+        if not change:
+            obj.created_by = request.user.get_full_name() or request.user.username
+        else:
             old_obj = ZaznamKnihaProvozu.objects.get(pk=obj.pk)
             for field in TRACKED_FIELDS:
                 old_value = getattr(old_obj, field)
                 new_value = getattr(obj, field)
-                if old_value != new_value:
+                if (old_value or '') != (new_value or ''):
                     HistorieKnihaProvozu.objects.create(
                         zaznam_id=obj,
                         changed_by=request.user,

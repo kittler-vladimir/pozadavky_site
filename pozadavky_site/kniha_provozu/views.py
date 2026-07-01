@@ -1,11 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 
 from .models import ZaznamKnihaProvozu, HistorieKnihaProvozu
 from .forms import ZaznamKnihaProvozuForm
 
-TRACKED_FIELDS = ['den', 'cas', 'kde_server', 'dir', 'popis', 'text', 'kdo', 'poznamka']
+TRACKED_FIELDS = [
+    'name', 'version', 'author', 'location', 'command', 'launched_at',
+    'type_of_launch', 'trigger_frequency', 'description',
+    'link_to_details', 'status',
+]
 
 
 @login_required
@@ -13,7 +18,12 @@ def zaznam_list(request):
     zaznamy = ZaznamKnihaProvozu.objects.all()
     search = request.GET.get('search', '')
     if search:
-        zaznamy = zaznamy.filter(text__icontains=search)
+        zaznamy = zaznamy.filter(
+            Q(name__icontains=search) |
+            Q(author__icontains=search) |
+            Q(description__icontains=search) |
+            Q(command__icontains=search)
+        )
     return render(request, 'kniha_provozu/zaznam_list.html', {
         'zaznamy': zaznamy,
         'search': search,
@@ -36,8 +46,7 @@ def zaznam_create(request):
         form = ZaznamKnihaProvozuForm(request.POST)
         if form.is_valid():
             zaznam = form.save(commit=False)
-            zaznam.created_by = request.user
-            zaznam.kdo = request.user.get_full_name() or request.user.username
+            zaznam.created_by = request.user.get_full_name() or request.user.username
             zaznam.save()
             messages.success(request, 'Záznam byl úspěšně vytvořen.')
             return redirect('kniha_provozu:zaznam_detail', zaznam_id=zaznam.id)
@@ -55,13 +64,12 @@ def zaznam_update(request, zaznam_id):
         form = ZaznamKnihaProvozuForm(request.POST, instance=zaznam)
         if form.is_valid():
             updated_zaznam = form.save(commit=False)
-            updated_zaznam.kdo = request.user.get_full_name() or request.user.username
             updated_zaznam.save()
 
             for field in TRACKED_FIELDS:
                 old_value = old_values[field]
                 new_value = getattr(updated_zaznam, field)
-                if old_value != new_value:
+                if (old_value or '') != (new_value or ''):
                     HistorieKnihaProvozu.objects.create(
                         zaznam_id=updated_zaznam,
                         changed_by=request.user,

@@ -13,24 +13,29 @@ Django webová aplikace pro evidenci a sledování požadavků (tasků), jejich 
 
 ### Kniha provozu
 
-Modul pro evidenci provozních zápisů/zásahů na serverech. Dostupný jak přes vlastní webové stránky (`/kniha-provozu/`), tak přes Django Admin.
+Modul pro evidenci skriptů a naplánovaných úloh (registr skriptů). Dostupný jak přes vlastní webové stránky (`/kniha-provozu/`), tak přes Django Admin.
 
 **Pole záznamu:**
 
 | Pole | Popis | Povinné? |
 |---|---|---|
-| Den | Datum zápisu | Ano |
-| Čas | Čas zápisu | Ano |
-| Kde (server) | Server/prostředí, kde byl zásah provedený | Ano |
-| Dir | Adresář, kde se zásah odehrál | Ne |
-| Popis | Bližší specifikace / doména / SQL | Ne |
-| Text | Krátký text k zápisu (max. 150 znaků) | Ne |
-| Kdo | Kdo zápis provedl – vyplňuje se **automaticky podle přihlášeného uživatele** | Ano (auto) |
-| Poznámka | Volná poznámka | Ne |
+| Název | Název skriptu/úlohy | Ano |
+| Verze | Verze skriptu (volný text) | Ne |
+| Autor | Autor skriptu | Ano |
+| Místo (adresář) | Adresář, kde se skript nachází | Ano |
+| Příkaz | Příkaz, kterým se skript spouští | Ano |
+| Spuštěno | Datum a čas spuštění | Ne |
+| Typ spuštění | Manuálně / Naplánovaně (cron) / Při události | Ano |
+| Frekvence spuštění | Jednorázově / Denně / Týdně / Měsíčně / Ročně / Jinak | Ano |
+| Popis | Volný popis | Ne |
+| Odkaz na detaily | Odkaz na externí dokumentaci | Ne |
+| Stav | Aktivní / Neaktivní / Ukončené / Zastavené / Zastaralé | Ano |
+| Vytvořil | Kdo záznam vytvořil – vyplňuje se **automaticky podle přihlášeného uživatele**, neměnné po vytvoření | Ano (auto) |
+| Datum publikace | Vyplňuje se automaticky při vytvoření | Ano (auto) |
 
 **Funkce:**
 - Dostupné z hlavního menu (odkaz "Kniha provozu", viditelný pro přihlášené uživatele)
-- Seznam záznamů zobrazující všechna pole (Den, Čas, Kde, Dir, Popis, Text, Kdo, Poznámka), s vyhledáváním v textu
+- Seznam záznamů zobrazující všechna pole, s vyhledáváním v názvu, autorovi, popisu a příkazu
 - Detail záznamu
 - Vytvoření a úprava záznamu (přes vlastní formulář i přes Django Admin)
 - **Automatická historie změn** – při každé úpravě záznamu se zaznamená, které pole se změnilo, jaká byla původní a nová hodnota, a kdo změnu provedl

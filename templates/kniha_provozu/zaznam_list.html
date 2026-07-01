@@ -10,7 +10,7 @@
 {% block content %}
 
 <form method="get" style="margin-bottom: 1em;">
-    <input type="text" name="search" value="{{ search }}" placeholder="Hledat v textu...">
+    <input type="text" name="search" value="{{ search }}" placeholder="Hledat v názvu, autorovi, popisu, příkazu...">
     <button type="submit">Hledat</button>
 </form>
 
@@ -20,27 +20,37 @@
 <table cellspacing="0">
     <thead>
         <tr>
-            <th>Den</th>
-            <th>Čas</th>
-            <th>Kde (server)</th>
-            <th>Dir</th>
+            <th>Název</th>
+            <th>Verze</th>
+            <th>Autor</th>
+            <th>Místo (adresář)</th>
+            <th>Příkaz</th>
+            <th>Spuštěno</th>
+            <th>Typ spuštění</th>
+            <th>Frekvence spuštění</th>
             <th>Popis</th>
-            <th>Text</th>
-            <th>Kdo</th>
-            <th>Poznámka</th>
+            <th>Odkaz na detaily</th>
+            <th>Stav</th>
+            <th>Vytvořil</th>
+            <th>Datum publikace</th>
         </tr>
     </thead>
     <tbody>
     {% for zaznam in zaznamy %}
         <tr>
-            <td><a href="{% url 'kniha_provozu:zaznam_detail' zaznam.id %}">{{ zaznam.den }}</a></td>
-            <td>{{ zaznam.cas }}</td>
-            <td>{{ zaznam.kde_server }}</td>
-            <td>{{ zaznam.dir }}</td>
-            <td>{{ zaznam.popis }}</td>
-            <td>{{ zaznam.text }}</td>
-            <td>{{ zaznam.kdo }}</td>
-            <td>{{ zaznam.poznamka }}</td>
+            <td><a href="{% url 'kniha_provozu:zaznam_detail' zaznam.id %}">{{ zaznam.name }}</a></td>
+            <td>{{ zaznam.version }}</td>
+            <td>{{ zaznam.author }}</td>
+            <td>{{ zaznam.location }}</td>
+            <td>{{ zaznam.command }}</td>
+            <td>{{ zaznam.launched_at }}</td>
+            <td>{{ zaznam.type_of_launch }}</td>
+            <td>{{ zaznam.trigger_frequency }}</td>
+            <td>{{ zaznam.description }}</td>
+            <td>{% if zaznam.link_to_details %}<a href="{{ zaznam.link_to_details }}">{{ zaznam.link_to_details }}</a>{% endif %}</td>
+            <td>{{ zaznam.status }}</td>
+            <td>{{ zaznam.created_by }}</td>
+            <td>{{ zaznam.added }}</td>
         </tr>
     {% endfor %}
     </tbody>
