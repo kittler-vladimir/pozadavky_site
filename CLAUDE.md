@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Pozadavky Site** — Django webová aplikace pro evidenci a sledování požadavků (úkolů), jejich autorů, řešitelů a stavu plnění. Obsahuje i modul **Kniha provozu** pro evidenci skriptů a naplánovaných úloh (kdo je vytvořil, kde běží, jak/jak často se spouští). UI a doménové texty jsou v češtině.
 
+## Jazyk komunikace
+
+Komunikuj s uživatelem v tomto repozitáři **česky** — odpovědi v chatu, otázky, vysvětlení. Anglicky piš pouze to, co je určeno ke sdílení mimo konverzaci nebo pro jiné agenty: GitHub issues, PR title/body, commit messages, kód, komentáře v kódu, instrukce pro subagenty. Češtinu uvnitř anglického textu používej jen v uvozovkách/kódu při citaci konkrétního UI textu nebo doménového pojmu.
+
 ## Tech stack
 
 - Python / Django `2.2.28` (old-style, pre-`Field.help_text`-heavy APIs; avoid suggesting Django 3+/4+ only features)
