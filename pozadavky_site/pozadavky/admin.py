@@ -53,7 +53,7 @@ class RequirementAdmin(admin.ModelAdmin):
         js = ('admin/js/jquery.init.js', 'js/requirement_admin.js',)
 
     list_display = (
-        'id', 'requirement', 'author_fullname', 'group_owner',
+        'id', 'requirement', 'cislo_jednaci', 'author_fullname', 'group_owner',
         'owner_fullname', 'status', 'deadline', 'done',
     )
 
